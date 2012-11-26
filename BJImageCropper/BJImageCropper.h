@@ -20,28 +20,35 @@
 #define ARC
 #endif
 
-@interface BJImageCropper : UIView {
-    UIImageView *imageView;
-    
-    UIView *cropView;
-    
-    UIView *topView;
-    UIView *bottomView;
-    UIView *leftView;
-    UIView *rightView;
+@interface BJImageCropper : UIView
+<UIGestureRecognizerDelegate>
+{
+  UIImageView *imageView;
+  
+  UIView *cropView;
+  
+  UIView *topView;
+  UIView *bottomView;
+  UIView *leftView;
+  UIView *rightView;
+  
+  UIView *topLeftView;
+  UIView *topRightView;
+  UIView *bottomLeftView;
+  UIView *bottomRightView;
+  
+  CGFloat imageScale;
+  
+  BOOL isPanning;
+  NSInteger currentTouches;
+  CGPoint panTouch;
+  CGFloat scaleDistance;
+  UIView *currentDragView; // Weak reference
+  UIImageView *corner_left_top;
+  UIImageView *corner_left_bottom;
+  UIImageView *corner_right_top;
+  UIImageView *corner_right_bottom;
 
-    UIView *topLeftView;
-    UIView *topRightView;
-    UIView *bottomLeftView;
-    UIView *bottomRightView;
-
-    CGFloat imageScale;
-    
-    BOOL isPanning;
-    NSInteger currentTouches;
-    CGPoint panTouch;
-    CGFloat scaleDistance;
-    UIView *currentDragView; // Weak reference 
 }
 
 @property (nonatomic, assign) CGRect crop;
