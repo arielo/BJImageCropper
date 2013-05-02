@@ -435,6 +435,9 @@
         currentDragView = leftView;
         
         if (CGRectContainsPoint(leftView.frame, touch)) {
+            if (CGRectGetHeight(leftView.frame) == CGRectGetHeight(imageView.frame)) {
+
+            }
           frame.size.width += CGOriginX(frame) - x;
           frame.origin.x = x;
         }
@@ -509,12 +512,20 @@
           frame.size.height = y - CGOriginY(frame);
         }
         else if (currentDragView == leftView) {
+            if (CGRectGetHeight(imageView.frame) == CGRectGetHeight(cropView.frame)) {
+                frame.size.width = frame.size.height;
+            }else{
           frame.size.width += CGOriginX(frame) - x;
+            }
           frame.origin.x = x;
         }
         else if (currentDragView == rightView) {
           currentDragView = rightView;
-          frame.size.width = x - CGOriginX(frame);
+            if (CGRectGetHeight(imageView.frame) == CGRectGetHeight(cropView.frame)) {
+                frame.size.width = frame.size.height;
+            }else{
+                frame.size.width = x - CGOriginX(frame);
+            }
         }
         else if (currentDragView == topLeftView) {
           frame.size.width += CGOriginX(frame) - x;
@@ -522,18 +533,28 @@
           frame.origin = touch;
         }
         else if (currentDragView == topRightView) {
+            
           frame.size.height += CGOriginY(frame) - y;
           frame.origin.y = y;
           frame.size.width = x - CGOriginX(frame);
         }
         else if (currentDragView == bottomLeftView) {
-          frame.size.width += CGOriginX(frame) - x;
-          frame.size.height = y - CGOriginY(frame);
-          frame.origin.x =x;
+            if (CGRectGetHeight(imageView.frame) == CGRectGetHeight(cropView.frame)) {
+                frame.size.width = frame.size.height;
+            }else{
+                frame.size.width += CGOriginX(frame) - x;
+                frame.size.height = y - CGOriginY(frame);
+            }
+            
+            frame.origin.x = x;
         }
         else if ( currentDragView == bottomRightView) {
-          frame.size.width = x - CGOriginX(frame);
-          frame.size.height = y - CGOriginY(frame);
+            if (CGRectGetHeight(imageView.frame) == CGRectGetHeight(cropView.frame)) {
+                frame.size.width = frame.size.height;
+            }else{
+                frame.size.width = x - CGOriginX(frame);
+                frame.size.height = y - CGOriginY(frame);
+            }
         }
         
         if (frame.size.width > frame.size.height) {
@@ -627,16 +648,25 @@
         cropView.frame = frame;
         
       }
-    } break;
-      
+    }
+
+    break;
+
   }
-  
+
   [self updateBounds];
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-  scaleDistance = 0;
-  currentTouches = [[event allTouches] count];
+    scaleDistance = 0;
+    currentTouches = [[event allTouches] count];
+    if (CGRectGetHeight(imageView.frame) == CGRectGetHeight(cropView.frame))
+    {
+        CGRect frame = cropView.frame;
+        frame.size.width = frame.size.height;
+        cropView.frame = frame;
+        [self updateBounds];
+    }
 }
 
 - (UIImage*) getCroppedImage {
