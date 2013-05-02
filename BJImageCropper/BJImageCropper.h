@@ -10,7 +10,7 @@
 
 #define IMAGE_CROPPER_OUTSIDE_STILL_TOUCHABLE 40.0f
 #define IMAGE_CROPPER_INSIDE_STILL_EDGE 20.0f
-
+#define TEST_ADDITION 1
 #ifndef __has_feature
 // not LLVM Compiler
 #define __has_feature(x) 0
